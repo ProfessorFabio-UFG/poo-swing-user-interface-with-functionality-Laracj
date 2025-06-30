@@ -1,0 +1,191 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class Interface extends JFrame {
+    private JTextField campoCodigo, campoNome;
+    private JRadioButton radioFeminino, radioMasculino;
+    private JTextArea areaCurriculo;
+    private JComboBox<String> comboInteresse, comboAtuacao;
+
+    public Interface() {
+        super("Ficha de Avaliação");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(600, 600);
+        setLayout(new BorderLayout());
+        setLocationRelativeTo(null);
+
+        JMenuBar barraMenu = new JMenuBar();
+        JMenu menuArquivo = new JMenu("Arquivo");
+        JMenu menuEditar = new JMenu("Editar");
+
+        JMenu menuEnviar = new JMenu("Enviar");
+        JMenuItem itemEmail = new JMenuItem("Email");
+        JMenuItem itemImpressora = new JMenuItem("Impressora");
+        menuEnviar.add(itemEmail);
+        menuEnviar.add(itemImpressora);
+
+        JMenuItem itemSalvar = new JMenuItem("Salvar");
+        JMenuItem itemSair = new JMenuItem("Sair");
+
+        menuArquivo.add(menuEnviar);
+        menuArquivo.add(itemSalvar);
+        menuArquivo.add(itemSair);
+
+        barraMenu.add(menuArquivo);
+        barraMenu.add(menuEditar);
+        setJMenuBar(barraMenu);
+
+        JPanel painelPrincipal = new JPanel(new GridBagLayout());
+        GridBagConstraints restricoes = new GridBagConstraints();
+        restricoes.insets = new Insets(4, 4, 4, 4);
+        restricoes.fill = GridBagConstraints.HORIZONTAL;
+        restricoes.anchor = GridBagConstraints.WEST;
+
+        JLabel rotuloTitulo = new JLabel("Ficha de Avaliação", JLabel.CENTER);
+        rotuloTitulo.setForeground(Color.RED);
+        rotuloTitulo.setFont(new Font("Arial", Font.BOLD, 14));
+        restricoes.gridwidth = 2;
+        restricoes.gridx = 0;
+        restricoes.gridy = 0;
+        painelPrincipal.add(rotuloTitulo, restricoes);
+
+        JPanel painelDados = new JPanel(new GridBagLayout());
+        painelDados.setBorder(BorderFactory.createTitledBorder("Dados Pessoais"));
+        GridBagConstraints restricoesDados = new GridBagConstraints();
+        restricoesDados.insets = new Insets(4, 4, 4, 4);
+        restricoesDados.fill = GridBagConstraints.HORIZONTAL;
+
+        campoCodigo = new JTextField(15);
+        campoNome = new JTextField(15);
+        radioFeminino = new JRadioButton("Feminino");
+        radioMasculino = new JRadioButton("Masculino");
+        ButtonGroup grupoSexo = new ButtonGroup();
+        grupoSexo.add(radioFeminino);
+        grupoSexo.add(radioMasculino);
+
+        restricoesDados.gridx = 0; restricoesDados.gridy = 0;
+        painelDados.add(new JLabel("Código:"), restricoesDados);
+        restricoesDados.gridx = 1;
+        painelDados.add(campoCodigo, restricoesDados);
+
+        restricoesDados.gridx = 0; restricoesDados.gridy = 1;
+        painelDados.add(new JLabel("Nome:"), restricoesDados);
+        restricoesDados.gridx = 1;
+        painelDados.add(campoNome, restricoesDados);
+
+        restricoesDados.gridx = 0; restricoesDados.gridy = 2;
+        painelDados.add(new JLabel("Sexo:"), restricoesDados);
+        restricoesDados.gridx = 1;
+        JPanel painelSexo = new JPanel();
+        painelSexo.add(radioFeminino);
+        painelSexo.add(radioMasculino);
+        painelDados.add(painelSexo, restricoesDados);
+
+        restricoes.gridy = 1;
+        painelPrincipal.add(painelDados, restricoes);
+
+        areaCurriculo = new JTextArea(5, 30);
+        JScrollPane scrollCurriculo = new JScrollPane(areaCurriculo);
+        JPanel painelCurriculo = new JPanel(new BorderLayout());
+        painelCurriculo.setBorder(BorderFactory.createTitledBorder("Curriculum Vitae"));
+        painelCurriculo.add(scrollCurriculo, BorderLayout.CENTER);
+
+        restricoes.gridy = 2;
+        painelPrincipal.add(painelCurriculo, restricoes);
+
+        comboInteresse = new JComboBox<>(new String[]{"Desenvolvedor", "Analista", "Designer"});
+        comboInteresse.setForeground(Color.RED);
+
+        comboAtuacao = new JComboBox<>(new String[]{"Programação", "Testes", "Banco de Dados"});
+        comboAtuacao.setForeground(Color.BLUE);
+
+        JPanel painelAreas = new JPanel(new GridBagLayout());
+        painelAreas.setBorder(BorderFactory.createTitledBorder("Áreas"));
+        GridBagConstraints restricoesAreas = new GridBagConstraints();
+        restricoesAreas.insets = new Insets(4, 4, 4, 4);
+        restricoesAreas.fill = GridBagConstraints.HORIZONTAL;
+
+        restricoesAreas.gridx = 0; restricoesAreas.gridy = 0;
+        painelAreas.add(new JLabel("Interesse:"), restricoesAreas);
+        restricoesAreas.gridx = 1;
+        painelAreas.add(comboInteresse, restricoesAreas);
+        restricoesAreas.gridx = 2;
+        painelAreas.add(new JLabel("Atuação:"), restricoesAreas);
+        restricoesAreas.gridx = 3;
+        painelAreas.add(comboAtuacao, restricoesAreas);
+
+        restricoes.gridy = 3;
+        painelPrincipal.add(painelAreas, restricoes);
+
+        JPanel painelBotoes = new JPanel();
+        painelBotoes.setBackground(Color.GREEN);
+
+        JButton botaoSalvar = new JButton("Salvar");
+        JButton botaoAnterior = new JButton("Anterior");
+        JButton botaoProximo = new JButton("Próximo");
+        JButton botaoNovo = new JButton("Novo");
+        JButton botaoCancelar = new JButton("Cancelar");
+
+        painelBotoes.add(botaoSalvar);
+        painelBotoes.add(botaoAnterior);
+        painelBotoes.add(botaoProximo);
+        painelBotoes.add(botaoNovo);
+        painelBotoes.add(botaoCancelar);
+
+        add(painelPrincipal, BorderLayout.CENTER);
+        add(painelBotoes, BorderLayout.SOUTH);
+
+        // Funcionalidades dos botões e menus
+        ActionListener acaoSalvar = e -> {
+            String codigo = campoCodigo.getText();
+            String nome = campoNome.getText();
+            String sexo = radioFeminino.isSelected() ? "Feminino" : radioMasculino.isSelected() ? "Masculino" : "Não informado";
+            String curriculo = areaCurriculo.getText();
+            String interesse = (String) comboInteresse.getSelectedItem();
+            String atuacao = (String) comboAtuacao.getSelectedItem();
+
+            String dados = String.format(
+                "Código: %s\nNome: %s\nSexo: %s\nCV: %s\nInteresse: %s\nAtuação: %s",
+                codigo, nome, sexo, curriculo, interesse, atuacao
+            );
+
+            JOptionPane.showMessageDialog(this, dados, "Dados Salvos", JOptionPane.INFORMATION_MESSAGE);
+        };
+
+        botaoSalvar.addActionListener(acaoSalvar);
+        itemSalvar.addActionListener(acaoSalvar);
+
+        botaoNovo.addActionListener(e -> {
+            campoCodigo.setText("");
+            campoNome.setText("");
+            areaCurriculo.setText("");
+            radioFeminino.setSelected(false);
+            radioMasculino.setSelected(false);
+            comboInteresse.setSelectedIndex(0);
+            comboAtuacao.setSelectedIndex(0);
+        });
+
+        itemSair.addActionListener(e -> System.exit(0));
+        botaoCancelar.addActionListener(e -> System.exit(0));
+
+        itemEmail.addActionListener(e ->
+            JOptionPane.showMessageDialog(this, "Enviando por e-mail...", "Enviar", JOptionPane.INFORMATION_MESSAGE));
+
+        itemImpressora.addActionListener(e ->
+            JOptionPane.showMessageDialog(this, "Enviando para a impressora...", "Enviar", JOptionPane.INFORMATION_MESSAGE));
+
+        botaoAnterior.addActionListener(e ->
+            JOptionPane.showMessageDialog(this, "Registro anterior..."));
+
+        botaoProximo.addActionListener(e ->
+            JOptionPane.showMessageDialog(this, "Próximo registro..."));
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            Interface janela = new Interface();
+            janela.setVisible(true);
+        });
+    }
+}
